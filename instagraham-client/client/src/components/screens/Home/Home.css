@@ -1,0 +1,9 @@
+.main {
+  width: 60%;
+  margin: auto;
+}
+.home {
+  max-width: 600px;
+  height: max-content;
+  margin: 30px;
+}

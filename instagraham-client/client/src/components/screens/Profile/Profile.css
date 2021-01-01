@@ -1,0 +1,50 @@
+.main-container {
+  margin: auto;
+}
+.info-container {
+  width: 60%;
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: auto;
+  border-bottom: 1px solid gray;
+}
+
+.pic-container {
+  margin-right: 30px;
+  flex-grow: 1;
+}
+.profile-pic {
+  height: 160px;
+  width: 160px;
+  border-radius: 80px;
+  padding: 4px;
+  object-fit: cover;
+  margin: 0.5rem 3rem;
+}
+
+.follow-info h6 {
+  display: inline;
+  margin: 0.5rem;
+}
+
+.user-data {
+  flex-grow: 2;
+  width: 400px;
+}
+
+/* Gallery */
+.gallery {
+  margin: auto;
+  width: 60%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.item {
+  width: 30%;
+  object-fit: cover;
+  margin-top: 20px;
+}
