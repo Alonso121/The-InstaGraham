@@ -40,7 +40,7 @@ function Signup() {
                 M.toast({html: data.error, classes:"#c62828 red darken-3"})
             } else {
                 M.toast({html: data.message, classes:"#66bb6a green lighten-1"})
-                history.push("/signin")
+                history.push("/login")
             }
         }).catch(err => {
             console.log(err);
@@ -57,7 +57,7 @@ function Signup() {
                 <button className="btn waves-effect waves-light blue darken-2" onClick={() => PostData()}>SignUp</button>
                 <p>
                     Already have an account?
-                    <Link to="/signin"> <strong>Click here!</strong></Link>
+                    <Link to="/login"> <strong>Click here!</strong></Link>
                 </p>
             </div>
         </div>

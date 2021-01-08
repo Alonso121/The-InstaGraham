@@ -38,8 +38,8 @@ function Login() {
                 localStorage.setItem("jwt", data.token)
                 localStorage.setItem("user", JSON.stringify(data.user))
                 M.toast({html: "sign in successful", classes:"#66bb6a green lighten-1"})
-                dispatch({type: "logged-in"})
-                history.push("/home")
+                dispatch({type: "logged-in", payload: data})
+                history.push("/")
             }
         }).catch(err => {
             console.log(err);

@@ -7,7 +7,7 @@ export const ACTIONS = {
 function reducer(state, action) {
   switch (action.type) {
     case "logged-in":
-      return { ...state, isLoggedIn: true };
+      return { ...state, isLoggedIn: true, userData: action.payload };
 
     case "logged-out":
       return { ...state, isLoggedIn: false };
@@ -30,7 +30,10 @@ export function useDispatch() {
 }
 
 export function ReducerProvider({ children }) {
-  const [state, dispatch] = useReducer(reducer, { isLoggedIn: false });
+  const [state, dispatch] = useReducer(reducer, {
+    isLoggedIn: false,
+    userData: "",
+  });
 
   return (
     <StateContext.Provider value={state}>
