@@ -35,8 +35,8 @@ function Login() {
             if(data.error) {
                 M.toast({html: data.error, classes:"#c62828 red darken-3"})
             } else {
-                localStorage.setItem("jwt", data.token)
-                localStorage.setItem("user", JSON.stringify(data.user))
+                sessionStorage.setItem("jwt", data.token)
+                sessionStorage.setItem("user", JSON.stringify(data))
                 M.toast({html: "sign in successful", classes:"#66bb6a green lighten-1"})
                 dispatch({type: "logged-in", payload: data})
                 history.push("/")

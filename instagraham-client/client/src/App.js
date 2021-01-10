@@ -13,7 +13,7 @@ function App() {
   const history = useHistory();
 
   useEffect(() => {
-    if (!localStorage.jwt || !localStorage.user) {
+    if (!sessionStorage.jwt || !sessionStorage.user) {
       history.push("/login");
     }
   });
