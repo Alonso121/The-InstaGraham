@@ -7,19 +7,23 @@ import Login from "./components/screens/Login/Login";
 import Profile from "./components/screens/Profile/Profile";
 import Signup from "./components/screens/Signup/Signup";
 import CreatePost from "./components/screens/CreatePosts/CreatePosts";
-import { ReducerProvider } from "./components/reducers/reducerContext";
+import { useDispatch } from "./components/reducers/reducerContext";
 
 function App() {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!sessionStorage.jwt || !sessionStorage.user) {
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    if (user) {
+      dispatch({ type: "logged-in", payload: user });
+    } else {
       history.push("/login");
     }
   });
 
   return (
-    <ReducerProvider>
+    <>
       <Navbar />
       <Route exact path="/">
         <Home />
@@ -36,7 +40,7 @@ function App() {
       <Route path="/create">
         <CreatePost />
       </Route>
-    </ReducerProvider>
+    </>
   );
 }
 

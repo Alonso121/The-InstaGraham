@@ -10,7 +10,7 @@ function reducer(state, action) {
       return { ...state, isLoggedIn: true, userData: action.payload };
 
     case "logged-out":
-      return { ...state, isLoggedIn: false };
+      return { ...state, isLoggedIn: false, userData: "" };
 
     default:
       return state;

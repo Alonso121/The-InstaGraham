@@ -11,7 +11,7 @@ function Links() {
 
     function handleLogout() {
         dispatch({type: "logged-out"});
-        localStorage.clear();
+        sessionStorage.clear();
         history.push("/login")
     }
 

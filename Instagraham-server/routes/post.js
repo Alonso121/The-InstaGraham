@@ -50,12 +50,13 @@ router.get("/myposts", requireLogin, (req, res) => {
 });
 
 router.put("/like", requireLogin, (req, res) => {
-  Post.findByIdAndUpdate(
-    req.body.postId,
+  Post.findOneAndUpdate(
+    { _id: req.body.postId },
     {
       $push: { likes: req.user._id },
     },
     {
+      useFindAndModify: false,
       new: true,
     }
   )
@@ -71,12 +72,13 @@ router.put("/like", requireLogin, (req, res) => {
 });
 
 router.put("/unlike", requireLogin, (req, res) => {
-  Post.findByIdAndUpdate(
-    req.body.postId,
+  Post.findOneAndUpdate(
+    { _id: req.body.postId },
     {
       $pull: { likes: req.user._id },
     },
     {
+      useFindAndModify: false,
       new: true,
     }
   )
@@ -97,12 +99,54 @@ router.put("/comment", requireLogin, (req, res) => {
     postedBy: req.user._id,
   };
 
-  Post.findByIdAndUpdate(
-    req.body.postId,
+  Post.findOneAndUpdate(
+    { _id: req.body.postId },
     {
       $push: { comments: comment },
     },
     {
+      useFindAndModify: false,
+      new: true,
+    }
+  )
+    .populate("comments.postedBy", "postId name")
+    .populate("postedBy", { name: 1 })
+    .exec((err, result) => {
+      if (err) {
+        return res.status(422).json({ error: err });
+      } else {
+        res.json(result);
+      }
+    });
+});
+
+router.delete("/deletepost/:postId", requireLogin, (req, res) => {
+  Post.findOne({ _id: req.params.postId })
+    .populate("postedBy", "_id")
+    .exec((err, post) => {
+      if (err || !post) {
+        res.status(422).json({ error: err });
+      } else if (post.postedBy._id.toString() === req.user._id.toString()) {
+        post
+          .remove()
+          .then((result) => {
+            res.json(result);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+});
+
+router.put("/deletecomment/:postId/:commentId", requireLogin, (req, res) => {
+  Post.findOneAndUpdate(
+    { _id: req.params.postId },
+    {
+      $pull: { comments: { commentId: req.params.commentId } },
+    },
+    {
+      useFindAndModify: false,
       new: true,
     }
   )
