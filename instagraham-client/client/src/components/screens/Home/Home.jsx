@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
-import { useReducerState } from "../../reducers/reducerContext"
 
 
 
 function Home() {
   const [data, setData] = useState([]);
-  const [newComment, setNewComment] = useState("");
-  const state = useReducerState();
-  const userId = state.userData.user;
+  const [userId, setUserId] = useState("")
   
   console.log(data);
+  console.log(userId);
 
   useEffect(() => {
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    if(!user) {
+      return
+    }
+    setUserId(user.user);
     fetch("/allposts", {
       headers: {
         Authorization: `Bearer ${sessionStorage.jwt}`
@@ -118,7 +121,8 @@ function Home() {
     })
   }
 
-  function deleteComment(commentId, postId, postedById) {
+  function deleteComment(comment, postId, postedById) {
+    const {commentId} = comment;
     console.log(commentId, postId);
     fetch(`/deletecomment/${postId}/${commentId}`,{
       method: "put",
@@ -144,9 +148,7 @@ function Home() {
     })
   }
 
-  function commentHandler(e) {
-    setNewComment(e.target.value)
-  }
+ 
 
   return (
     <div className="main">
@@ -176,16 +178,23 @@ function Home() {
         <p>{post.body}</p>
         {post.comments.map(comment => (
           <h6 key={comment.commentId}> <b>{comment.postedBy.name}</b> {comment.text} 
-          <i className  ="material-icons tiny" style={{float: "right"}} onClick={() => deleteComment(comment.commentId, post._id, post.postedBy._id)}>delete</i>
+          {
+             comment.postedBy._id === userId ||  post.postedBy._id === userId 
+            ? 
+            <i className  ="material-icons tiny" style={{float: "right"}} onClick={() => deleteComment(comment, post._id, post.postedBy._id)}>delete</i>
+            :
+            null
+          }
           </h6>
         ))}
         
         <form onSubmit={(e) => {
           e.preventDefault();
           comment(e.target[0].value, post._id);
-          setNewComment("")
+          console.log(e.target[0].value);
+          e.target[0].value = ""
         }}>
-        <input type="text" placeholder="add a comment" value={newComment} onChange={commentHandler}/>
+        <input type="text" placeholder="add a comment" />
         </form>
         </div>
       </div>
