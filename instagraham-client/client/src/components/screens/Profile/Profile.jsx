@@ -4,11 +4,9 @@ import "./Profile.css"
 
 function Profile() {
   const [posts, setPosts] = useState([]);
-  const [userData, setUserData] = useState({});
-  useEffect(() => {
-    const parsedData = JSON.parse(sessionStorage.getItem("user"))
-    setUserData(parsedData)
+  const userData = JSON.parse(sessionStorage.getItem("user"))
 
+  useEffect(() => {
     fetch("/myposts", {
       headers: {
         Authorization: `Bearer ${sessionStorage.jwt}`
@@ -20,7 +18,7 @@ function Profile() {
     })
   }, [])
 
-  console.log(userData);
+  //console.log(userData);
 
   return (
    <div>
@@ -31,9 +29,9 @@ function Profile() {
         <div className="user-data">
           <h5>{userData.name}</h5>
           <ul className="follow-info">
-            <h6><strong>20</strong> posts</h6>
-            <h6><strong>20</strong> followers</h6>
-            <h6><strong>20</strong> following</h6>
+            <h6><strong>{posts.length}</strong> posts</h6>
+            <h6><strong>{userData.followers.length}</strong> followers</h6>
+            <h6><strong>{userData.following.length}</strong> following</h6>
           </ul>
         </div>
       </div>

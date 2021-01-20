@@ -5,6 +5,7 @@ import { Route, useHistory } from "react-router-dom";
 import Home from "./components/screens/Home/Home";
 import Login from "./components/screens/Login/Login";
 import Profile from "./components/screens/Profile/Profile";
+import UserProfile from "./components/screens/UserProfile/UserProfile";
 import Signup from "./components/screens/Signup/Signup";
 import CreatePost from "./components/screens/CreatePosts/CreatePosts";
 import { useDispatch } from "./components/reducers/reducerContext";
@@ -31,8 +32,11 @@ function App() {
       <Route path="/login">
         <Login />
       </Route>
-      <Route path="/profile">
+      <Route exact path="/profile">
         <Profile />
+      </Route>
+      <Route path="/profile/:userid">
+        <UserProfile />
       </Route>
       <Route path="/signup">
         <Signup />

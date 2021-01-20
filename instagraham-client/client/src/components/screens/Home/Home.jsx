@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Home.css";
-
+import { Link } from "react-router-dom"
 
 
 function Home() {
@@ -155,7 +155,7 @@ function Home() {
       {data.map(post => (
         <div className="card home" key={post._id}>
             <h5 style={{padding: ".3rem"}}>
-              {post.postedBy.name}
+              <Link to={`/profile/${post.postedBy._id}`}>{post.postedBy.name}</Link>
               {post.postedBy._id === userId
               ?  
               <i className  ="material-icons right" style={{float: "right"}} onClick={() => deletePost(post._id)}>delete</i> 
