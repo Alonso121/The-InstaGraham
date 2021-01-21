@@ -5,11 +5,10 @@ const User = mongoose.model("User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../keys");
-const requireLogin = require("../middleware/RequireLogin");
 
 router.post("/signup", (req, res) => {
-  const { name, email, password } = req.body;
-  if (!name || !email || !password) {
+  const { name, email, password, profilepic } = req.body;
+  if (!name || !email || !password || !profilepic) {
     return res.status(422).json({ error: "Please provide all fields!" });
   }
   User.findOne({ email: email }).then((savedUser) => {
@@ -25,6 +24,7 @@ router.post("/signup", (req, res) => {
           email,
           password: hashedPassword,
           name,
+          profilepic,
         });
 
         user
@@ -57,9 +57,24 @@ router.post("/signin", (req, res) => {
         .then((doMatch) => {
           if (doMatch) {
             /* res.json({ message: "successfully signed in" }); */
-            const { _id, name, email, followers, following } = savedUser;
+            const {
+              _id,
+              name,
+              email,
+              followers,
+              following,
+              profilepic,
+            } = savedUser;
             const token = jwt.sign({ _id: savedUser._id }, JWT_SECRET);
-            res.json({ token, user: _id, name, email, followers, following });
+            res.json({
+              token,
+              user: _id,
+              name,
+              email,
+              followers,
+              following,
+              profilepic,
+            });
           } else {
             return res.status(422).json({ error: "Invalid email or password" });
           }

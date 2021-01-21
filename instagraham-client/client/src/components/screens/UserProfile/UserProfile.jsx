@@ -24,6 +24,7 @@ function Profile() {
     })
   }, [userid, loggedUserId])
   
+  console.log(profile);
 
   function followUser () {
     fetch("/follow", {
@@ -70,15 +71,15 @@ function Profile() {
    <div>
       <div className="info-container">
         <div className="pic-container">
-          <img className="profile-pic" src="https://images.unsplash.com/photo-1542103749-8ef59b94f47e?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8fDB8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt=""/>
+          <img className="profile-pic" src={profile.user.profilepic} alt=""/>
         </div>
         <div className="user-data">
           <h5>{profile.user.name}
           {
           followBtn?
-          <button className="btn-small waves-effect waves-light blue darken-2" onClick={() => followUser()}>Follow</button>
+          <button className="btn-small waves-effect waves-light blue darken-2" style={{marginLeft: "16px"}} onClick={() => followUser()}>Follow</button>
           :
-          <button className="btn-small waves-effect waves-light blue darken-2" onClick={() => unfollowUser()}>Unfollow</button>
+          <button className="btn-small waves-effect waves-light blue darken-2" style={{marginLeft: "16px"}} onClick={() => unfollowUser()}>Unfollow</button>
           }
           </h5>
           <ul className="follow-info">

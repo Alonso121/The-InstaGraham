@@ -6,11 +6,11 @@ const Post = mongoose.model("Post");
 const User = mongoose.model("User");
 
 router.get("/profile/:id", requireLogin, (req, res) => {
-  User.findOne({ _id: req.params.id })
+  User.findOne({ _id: req.params.id }, {})
     .select("-password")
     .then((user) => {
       Post.find({ postedBy: req.params.id })
-        .populate("postedBy", "_id name")
+        //.populate("postedBy", "_id name")
         .exec((err, posts) => {
           if (err) {
             return res.status(422).json({ error: err });
@@ -32,7 +32,7 @@ router.put("/follow", requireLogin, (req, res) => {
     },
     {
       useFindAndModify: false,
-      fields: { _id: 1, name: 1, email: 1, followers: 1, following: 1 },
+      fields: { password: 0 },
       new: true,
     },
     (err, followedUser) => {
@@ -46,7 +46,7 @@ router.put("/follow", requireLogin, (req, res) => {
         },
         {
           useFindAndModify: false,
-          fields: { _id: 1, name: 1, email: 1, followers: 1, following: 1 },
+          fields: { password: 0 },
           new: true,
         }
       )
@@ -69,7 +69,7 @@ router.put("/unfollow", requireLogin, (req, res) => {
     },
     {
       useFindAndModify: false,
-      fields: { _id: 1, name: 1, email: 1, followers: 1, following: 1 },
+      fields: { password: 0 },
       new: true,
     },
     (err, followedUser) => {
@@ -83,7 +83,7 @@ router.put("/unfollow", requireLogin, (req, res) => {
         },
         {
           useFindAndModify: false,
-          fields: { _id: 1, name: 1, email: 1, followers: 1, following: 1 },
+          fields: { password: 0 },
           new: true,
         }
       )

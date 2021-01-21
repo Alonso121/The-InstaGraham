@@ -8,7 +8,6 @@ function Home() {
   const [userId, setUserId] = useState("")
   
   console.log(data);
-  console.log(userId);
 
   useEffect(() => {
     const user = JSON.parse(sessionStorage.getItem("user"));
@@ -152,6 +151,7 @@ function Home() {
 
   return (
     <div className="main">
+      
       {data.map(post => (
         <div className="card home" key={post._id}>
             <h5 style={{padding: ".3rem"}}>
@@ -170,14 +170,21 @@ function Home() {
         <h5>{post.title}</h5>
         {post.likes.includes(userId) 
         ? 
-        <i className="material-icons" style={{color: "red"}} onClick={()=> unlikesPost(post._id)}>favorite</i>
+        <i className="material-icons heart" style={{color: "red"}} onClick={()=> unlikesPost(post._id)}>favorite</i>
         : 
-        <i className="material-icons" onClick={()=> likesPost(post._id)}>favorite_border</i>}        
+        <i className="material-icons heart" onClick={()=> likesPost(post._id)}>favorite_border</i>}        
         
         <h6><b>{post.likes.length} likes</b></h6>        
         <p>{post.body}</p>
         {post.comments.map(comment => (
-          <h6 key={comment.commentId}> <b>{comment.postedBy.name}</b> {comment.text} 
+          <h6 key={comment.commentId}> 
+          {comment.postedBy._id === userId ?
+          <Link to={"/profile"}><b>{comment.postedBy.name}</b></Link>
+          :
+          <Link to={`/profile/${comment.postedBy._id}`}><b>{comment.postedBy.name}</b></Link> 
+        }
+          <span className="comments">{comment.text} </span>
+        
           {
              comment.postedBy._id === userId ||  post.postedBy._id === userId 
             ? 
@@ -191,7 +198,6 @@ function Home() {
         <form onSubmit={(e) => {
           e.preventDefault();
           comment(e.target[0].value, post._id);
-          console.log(e.target[0].value);
           e.target[0].value = ""
         }}>
         <input type="text" placeholder="add a comment" />
