@@ -14,3 +14,18 @@
 .comments {
   margin-left: 0.3rem;
 }
+
+.post-header {
+  display: flex;
+  align-items: center;
+}
+
+.home-profile-pic {
+  height: 50px;
+  width: 50px;
+  border-radius: 50px;
+  padding: 1px;
+  border: 2px solid rgb(241, 74, 23);
+  object-fit: cover;
+  margin: 0.5rem;
+}

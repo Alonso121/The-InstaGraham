@@ -6,8 +6,8 @@ function Profile() {
   const {userid} = useParams();
   const [followBtn, setFollowBtn] = useState()
   const loggedUser = JSON.parse(sessionStorage.getItem("user"));
-  const loggedUserId = loggedUser.user
-  
+  const loggedUserId = loggedUser._id
+
   useEffect(() => {
     fetch(`/profile/${userid}`, {
       headers: {
@@ -16,15 +16,15 @@ function Profile() {
     }).then(res => res.json())
     .then(result => {
       setProfile(result);
+
       if(result.user.followers.includes(loggedUserId)){
         setFollowBtn(false)
       } else {
         setFollowBtn(true)
-      }
+      } 
     })
   }, [userid, loggedUserId])
   
-  console.log(profile);
 
   function followUser () {
     fetch("/follow", {
@@ -38,6 +38,7 @@ function Profile() {
       })
     }).then(res => res.json())
     .then(result => {
+      sessionStorage.setItem("user", JSON.stringify(result.loggedInUser))
       setProfile((prevState) => {
         return {...prevState, user: result.followedUser}
       })
@@ -57,6 +58,8 @@ function Profile() {
       })
     }).then(res => res.json())
     .then(result => {
+      console.log(result);
+      sessionStorage.setItem("user", JSON.stringify(result.loggedInUser))
       setProfile((prevState) => {
         return {...prevState, user: result.followedUser}
       })

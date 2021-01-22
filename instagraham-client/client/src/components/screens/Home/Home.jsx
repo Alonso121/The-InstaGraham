@@ -6,9 +6,9 @@ import { Link } from "react-router-dom"
 function Home() {
   const [data, setData] = useState([]);
   const [userId, setUserId] = useState("")
-  
-  console.log(data);
 
+  console.log(data);
+  
   useEffect(() => {
     const user = JSON.parse(sessionStorage.getItem("user"));
     if(!user) {
@@ -37,7 +37,6 @@ function Home() {
       })
     }).then(res => res.json())
     .then(result => {
-      //console.log(result);
       const newData = data.map(post => {
         if (post._id === result._id) {
           return result
@@ -63,7 +62,6 @@ function Home() {
       })
     }).then(res => res.json())
     .then(result => {
-      //console.log(result);
       const newData = data.map(post => {
         if (post._id === result._id) {
           return result
@@ -154,14 +152,14 @@ function Home() {
       
       {data.map(post => (
         <div className="card home" key={post._id}>
-            <h5 style={{padding: ".3rem"}}>
-              <Link to={`/profile/${post.postedBy._id}`}>{post.postedBy.name}</Link>
+            <div className="post-header">
+              <Link to={`/profile/${post.postedBy._id}`}><img className="home-profile-pic"  src={post.postedBy.profilepic} alt=""></img></Link><h6>{post.postedBy.name}</h6>
               {post.postedBy._id === userId
               ?  
               <i className  ="material-icons right" style={{float: "right"}} onClick={() => deletePost(post._id)}>delete</i> 
               :
               null }
-            </h5>
+            </div>
         <div className="card-image">
           <img src={post.photo} alt={post.title}/>
         </div>

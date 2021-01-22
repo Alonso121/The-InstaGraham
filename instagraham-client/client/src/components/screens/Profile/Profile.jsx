@@ -14,11 +14,9 @@ function Profile() {
     }).then(res => res.json())
     .then(posts => {
       setPosts(posts.myposts)
-      //console.log(posts.myposts);
     })
   }, [])
 
-  console.log(userData);
 
   return (
    <div>

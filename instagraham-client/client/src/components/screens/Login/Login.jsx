@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {Link, useHistory} from "react-router-dom";
 import M from "materialize-css";
-import { useDispatch } from "../../reducers/reducerContext"
+import { DispatchContext } from "../../reducers/reducerContext"
 
 function Login() {
-    const dispatch = useDispatch();
+    const dispatch = useContext(DispatchContext)
     const history = useHistory()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -37,7 +37,7 @@ function Login() {
             } else {
                 sessionStorage.setItem("jwt", data.token)
                 sessionStorage.setItem("user", JSON.stringify(data))
-                M.toast({html: "sign in successful", classes:"#66bb6a green lighten-1"})
+                M.toast({html: "sign in successful", classes:"#66bb6a green lighten-1 ", displayLength: 1000})
                 dispatch({type: "logged-in", payload: data})
                 history.push("/")
             }

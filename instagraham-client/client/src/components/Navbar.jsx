@@ -1,13 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Link, useHistory} from "react-router-dom"
-import { useReducerState, useDispatch } from "./reducers/reducerContext"
+import { StateContext, DispatchContext } from "./reducers/reducerContext"
 
 
 function Links() {
     const history = useHistory();
-    const state = useReducerState();
-    const dispatch = useDispatch()
-    console.log(state);
+    const state = useContext(StateContext);
+    const dispatch = useContext(DispatchContext)
 
     function handleLogout() {
         dispatch({type: "logged-out"});
@@ -31,7 +30,7 @@ function Links() {
 
 
 function Navbar() {
-    const state = useReducerState();
+    const state = useContext(StateContext);
 
     return (
         <div>

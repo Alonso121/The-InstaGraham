@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import { Route, useHistory } from "react-router-dom";
@@ -8,11 +8,11 @@ import Profile from "./components/screens/Profile/Profile";
 import UserProfile from "./components/screens/UserProfile/UserProfile";
 import Signup from "./components/screens/Signup/Signup";
 import CreatePost from "./components/screens/CreatePosts/CreatePosts";
-import { useDispatch } from "./components/reducers/reducerContext";
+import { DispatchContext } from "./components/reducers/reducerContext";
 
 function App() {
   const history = useHistory();
-  const dispatch = useDispatch();
+  const dispatch = useContext(DispatchContext);
 
   useEffect(() => {
     const user = JSON.parse(sessionStorage.getItem("user"));
