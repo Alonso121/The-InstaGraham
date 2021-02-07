@@ -18,8 +18,12 @@
 .post-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
-
+.profile-img-name {
+  display: flex;
+  align-items: center;
+}
 .home-profile-pic {
   height: 50px;
   width: 50px;

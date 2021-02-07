@@ -7,14 +7,13 @@ function Home() {
   const [data, setData] = useState([]);
   const [userId, setUserId] = useState("")
 
-  console.log(data);
-  
+
   useEffect(() => {
     const user = JSON.parse(sessionStorage.getItem("user"));
     if(!user) {
       return
     }
-    setUserId(user.user);
+    setUserId(user._id);
     fetch("/allposts", {
       headers: {
         Authorization: `Bearer ${sessionStorage.jwt}`
@@ -153,12 +152,13 @@ function Home() {
       {data.map(post => (
         <div className="card home" key={post._id}>
             <div className="post-header">
-              <Link to={`/profile/${post.postedBy._id}`}><img className="home-profile-pic"  src={post.postedBy.profilepic} alt=""></img></Link><h6>{post.postedBy.name}</h6>
-              {post.postedBy._id === userId
-              ?  
+              <div className="profile-img-name">
+              <Link to={`/profile/${post.postedBy._id}`}><img className="home-profile-pic"  src={post.postedBy.profilepic} alt=""></img></Link>
+              <h6>{post.postedBy.name}</h6>
+              </div>
+              {post.postedBy._id === userId &&               
               <i className  ="material-icons right" style={{float: "right"}} onClick={() => deletePost(post._id)}>delete</i> 
-              :
-              null }
+              }
             </div>
         <div className="card-image">
           <img src={post.photo} alt={post.title}/>

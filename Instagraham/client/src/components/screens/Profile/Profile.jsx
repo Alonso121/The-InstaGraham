@@ -5,6 +5,8 @@ import "./Profile.css"
 function Profile() {
   const [posts, setPosts] = useState([]);
   const userData = JSON.parse(sessionStorage.getItem("user"))
+  console.log(userData);
+  console.log(posts);
 
   useEffect(() => {
     fetch("/myposts", {

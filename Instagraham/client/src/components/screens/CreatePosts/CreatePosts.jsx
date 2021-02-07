@@ -16,7 +16,6 @@ function CreatePosts() {
         data.append("upload_preset", "insta-graham")
         data.append("cloud_name", "my-files")
 
-       
         fetch("https://api.cloudinary.com/v1_1/my-files/image/upload", {
             method:"post",
             body:data
