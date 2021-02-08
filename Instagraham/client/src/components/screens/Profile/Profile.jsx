@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./Profile.css"
+import { StateContext, DispatchContext } from "../../reducers/reducerContext"
 
 
 function Profile() {
-  const [posts, setPosts] = useState([]);
-  const userData = JSON.parse(sessionStorage.getItem("user"))
+  const dispatch = useContext(DispatchContext)
+  const state = useContext(StateContext);
+  const userData = state.userData
+
   console.log(userData);
-  console.log(posts);
+  const [posts, setPosts] = useState([]);
+  const [image, setImage] = useState("")
+  const [dispState, setDispState] = useState("none")
+
+  
 
   useEffect(() => {
     fetch("/myposts", {
@@ -16,16 +23,68 @@ function Profile() {
     }).then(res => res.json())
     .then(posts => {
       setPosts(posts.myposts)
+      console.log(posts);
     })
   }, [])
 
+  const postDetails = () => {
+    const data = new FormData()
+    data.append("file", image)
+    data.append("upload_preset", "ml_default")
+    data.append("cloud_name", "my-files")
+
+   
+    fetch("https://api.cloudinary.com/v1_1/my-files/image/upload", {
+        method:"post",
+        body:data
+    })
+    .then(res=> res.json())
+    .then(data => {
+      console.log(data.url);
+      changePic(data.url)
+    })
+    .catch(err =>{
+        console.log(err);
+    })               
+}
+
+const changePic = (image) => {
+  fetch("/changepic", {
+    method:"put",
+    headers: {
+        "Content-Type":"application/json"
+    },
+    body: JSON.stringify({
+      id: userData._id,
+      profilepic: image
+    })
+}).then(res => res.json())
+.then(data => {
+  dispatch({type: "logged-in", payload: data.loggedInUser})
+   setDispState('none')
+}).catch(err => {
+    console.log(err);
+})
+}
+
+
+  function toggleDisplay() {
+    if(dispState === 'none') {
+      setDispState('block')
+    } else {
+      setDispState('none')
+    }
+  }
 
   return (
    <div>
+     {!userData ? <h1>Loading</h1> :
       <div className="info-container">
         <div className="pic-container">
           <img className="profile-pic" src={userData.profilepic} alt=""/>
+          <div className="overlay" onClick={toggleDisplay}>Change pic?</div>
         </div>
+        
         <div className="user-data">
           <h5>{userData.name}</h5>
           <ul className="follow-info">
@@ -35,12 +94,26 @@ function Profile() {
           </ul>
         </div>
       </div>
+      }
+      <div className="card auth-card input-field" style={{display: dispState}}>
+      <div className="file-field input-field">
+                    <div className="btn blue dark-2">
+                        <span>Choose Profile Picture</span>
+                        <input type="file" onChange={(e) => setImage(e.target.files[0])} />
+                    </div>
+                    <div className="file-path-wrapper">
+                        <input className="file-path validate" type="text" />
+                    </div>
+                </div>
+                <button className="btn waves-effect waves-light blue dark-2" onClick={postDetails}>Upload</button>
+                </div>
       <div className="gallery">
       {posts.map(post => (
         <img className="item" key={post._id} src={post.photo} alt=""/>
       ))}
       
       </div>
+      
   </div>
   )
 }

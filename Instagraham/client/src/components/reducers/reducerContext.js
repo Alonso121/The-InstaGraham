@@ -8,16 +8,12 @@ function reducer(state, action) {
   switch (action.type) {
     case "logged-in":
       return {
-        ...state,
         isLoggedIn: true,
         userData: action.payload,
-        dispMode: "logged-in",
       };
 
     case "logged-out":
-      return { ...state, isLoggedIn: false, userData: "" };
-    case "update":
-      return { ...state, dispMode: "update", userData: action.payload };
+      return { isLoggedIn: false, userData: "" };
 
     default:
       return state;

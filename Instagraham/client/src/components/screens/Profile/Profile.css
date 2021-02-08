@@ -13,15 +13,44 @@
 
 .pic-container {
   margin-right: 30px;
-  flex-grow: 1;
+  position: relative;
 }
+.overlay {
+  text-align: center;
+  margin-top: -1.3rem;
+  font-family: "Grand Hotel", cursive;
+  /*  font-size: 1.5rem;
+  font-style: italic; */
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5); /* Black see-through */
+  color: #f1f1f1;
+  width: 100%;
+  opacity: 0;
+  color: white;
+  font-size: 20px;
+  display: block;
+  height: 160px;
+  width: 160px;
+  border-radius: 80px;
+  padding: 60px 32px;
+  object-fit: cover;
+  margin: 0.5rem 3rem;
+}
+
 .profile-pic {
+  display: block;
   height: 160px;
   width: 160px;
   border-radius: 80px;
   padding: 4px;
   object-fit: cover;
   margin: 0.5rem 3rem;
+}
+.pic-container:hover .overlay {
+  opacity: 1;
 }
 
 .follow-info h6 {

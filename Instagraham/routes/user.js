@@ -97,4 +97,26 @@ router.put("/unfollow", requireLogin, (req, res) => {
   );
 });
 
+router.put("/changepic", (req, res) => {
+  console.log(req.body.id, req.body.profilepic);
+  User.findOneAndUpdate(
+    { _id: req.body.id },
+
+    {
+      $set: { profilepic: req.body.profilepic },
+    },
+    {
+      useFindAndModify: false,
+      fields: { password: 0 },
+      new: true,
+    }
+  )
+    .then((loggedInUser) => {
+      res.json({ loggedInUser });
+    })
+    .catch((err) => {
+      return res.status(422).json({ error: err });
+    });
+});
+
 module.exports = router;
