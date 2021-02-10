@@ -62,7 +62,7 @@ router.put("/like", requireLogin, (req, res) => {
     }
   )
     .populate("comments.postedBy", "postId name")
-    .populate("postedBy", { name: 1 })
+    .populate("postedBy", { name: 1, profilepic: 1 })
     .exec((err, result) => {
       if (err) {
         return res.status(422).json({ error: err });
@@ -84,7 +84,7 @@ router.put("/unlike", requireLogin, (req, res) => {
     }
   )
     .populate("comments.postedBy", "postId name")
-    .populate("postedBy", { name: 1 })
+    .populate("postedBy", { name: 1, profilepic: 1 })
     .exec((err, result) => {
       if (err) {
         return res.status(422).json({ error: err });
@@ -111,7 +111,7 @@ router.put("/comment", requireLogin, (req, res) => {
     }
   )
     .populate("comments.postedBy", "postId name")
-    .populate("postedBy", { name: 1 })
+    .populate("postedBy", { name: 1, profilepic: 1 })
     .exec((err, result) => {
       if (err) {
         return res.status(422).json({ error: err });
@@ -152,7 +152,7 @@ router.put("/deletecomment/:postId/:commentId", requireLogin, (req, res) => {
     }
   )
     .populate("comments.postedBy", "postId name")
-    .populate("postedBy", { name: 1 })
+    .populate("postedBy", { name: 1, profilepic: 1 })
     .exec((err, result) => {
       if (err) {
         return res.status(422).json({ error: err });
