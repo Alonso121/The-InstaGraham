@@ -8,6 +8,7 @@ import Profile from "./components/screens/Profile/Profile";
 import UserProfile from "./components/screens/UserProfile/UserProfile";
 import Signup from "./components/screens/Signup/Signup";
 import CreatePost from "./components/screens/CreatePosts/CreatePosts";
+import Explore from "./components/Explore/Explore";
 import { DispatchContext } from "./components/reducers/reducerContext";
 
 function App() {
@@ -43,6 +44,9 @@ function App() {
       </Route>
       <Route path="/create">
         <CreatePost />
+      </Route>
+      <Route path="/explore">
+        <Explore />
       </Route>
     </>
   );

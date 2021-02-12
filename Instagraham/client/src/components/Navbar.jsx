@@ -16,6 +16,7 @@ function Links() {
 
     if(state.isLoggedIn) {
         return[
+            <li key='0'><Link to="/explore">Explore</Link></li>,
             <li key="1"><Link to="/profile">Profile</Link></li>,
             <li key="2"><Link to="/create">New Post</Link></li>,
             <li key="3" onClick={ handleLogout }><Link to="/">LogOut</Link></li>

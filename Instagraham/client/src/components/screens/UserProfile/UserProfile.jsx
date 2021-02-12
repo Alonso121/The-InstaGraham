@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom"
+import { DispatchContext } from "../../reducers/reducerContext"
 
 function Profile() {
+  const dispatch = useContext(DispatchContext)
   const [profile, setProfile] = useState({});
   const {userid} = useParams();
   const [followBtn, setFollowBtn] = useState()
@@ -38,7 +40,8 @@ function Profile() {
       })
     }).then(res => res.json())
     .then(result => {
-      sessionStorage.setItem("user", JSON.stringify(result.loggedInUser))
+      console.log(result);
+      dispatch({type: "logged-in", payload: result.loggedInUser})
       setProfile((prevState) => {
         return {...prevState, user: result.followedUser}
       })
@@ -59,7 +62,7 @@ function Profile() {
     }).then(res => res.json())
     .then(result => {
       console.log(result);
-      sessionStorage.setItem("user", JSON.stringify(result.loggedInUser))
+      dispatch({type: "logged-in", payload: result.loggedInUser})
       setProfile((prevState) => {
         return {...prevState, user: result.followedUser}
       })

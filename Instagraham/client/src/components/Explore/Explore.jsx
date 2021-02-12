@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import "./Explore.css";
 import { Link } from "react-router-dom"
-import "./Home.css"
 
-function Home() {
+
+function Explore() {
   const [data, setData] = useState([]);
   const [userId, setUserId] = useState("")
 
@@ -13,12 +14,13 @@ function Home() {
       return
     }
     setUserId(user._id);
-    fetch("/home-posts", {
+    fetch("/foreigns", {
       headers: {
         Authorization: `Bearer ${sessionStorage.jwt}`
       }
     }).then(response => response.json())
     .then(data => {
+      console.log(data);
       setData(data.posts);
     })
   }, [])
@@ -152,8 +154,12 @@ function Home() {
         <div className="card home" key={post._id}>
             <div className="post-header">
               <div className="profile-img-name">
-        
-              <Link to={`/profile/${post.postedBy._id}`}><img className="home-profile-pic"  src={post.postedBy.profilepic} alt=""></img></Link>
+                {post.postedBy._id === userId
+                ? 
+                <Link to={`/profile/`}><img className="home-profile-pic"  src={post.postedBy.profilepic} alt=""></img></Link>
+                :
+                <Link to={`/profile/${post.postedBy._id}`}><img className="home-profile-pic"  src={post.postedBy.profilepic} alt=""></img></Link>
+                }
               <h6>{post.postedBy.name}</h6>
               </div>
               {post.postedBy._id === userId &&               
@@ -207,4 +213,4 @@ function Home() {
   )
 }
 
-export default Home;
+export default Explore;

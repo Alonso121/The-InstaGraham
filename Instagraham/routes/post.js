@@ -4,8 +4,23 @@ const mongoose = require("mongoose");
 const requireLogin = require("../middleware/RequireLogin");
 const Post = mongoose.model("Post");
 
-router.get("/allposts", requireLogin, (req, res) => {
-  Post.find()
+router.get("/foreigns", requireLogin, (req, res) => {
+  Post.find({ postedBy: { $nin: req.user.following, $ne: req.user._id } })
+    .populate("comments.postedBy", "postId name")
+    .populate("postedBy", { name: 1, profilepic: 1 })
+    .sort("-createdAt")
+    .then((posts) => {
+      res.json({ posts });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+router.get("/home-posts", requireLogin, (req, res) => {
+  Post.find({
+    postedBy: { $in: req.user.following },
+  })
     .populate("comments.postedBy", "postId name")
     .populate("postedBy", { name: 1, profilepic: 1 })
     .sort("-createdAt")
