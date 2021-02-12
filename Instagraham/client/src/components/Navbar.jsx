@@ -33,8 +33,8 @@ function Navbar() {
     const state = useContext(StateContext);
 
     return (
-        <div>
-            <nav style={{width: '60%', margin: 'auto'}}>
+        
+            <nav >
                 <div className="nav-wrapper white" style={{color: 'black'}}>
                 <Link  to={state.isLoggedIn? "/" : "/login"} className="brand-logo left">InstaGraham</Link>
                 <ul id="nav-mobile" className="right">
@@ -42,7 +42,7 @@ function Navbar() {
                 </ul>
                 </div>
             </nav>
-        </div>
+       
     )
 }
 

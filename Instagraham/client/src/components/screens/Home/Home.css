@@ -1,12 +1,11 @@
 .main {
-  width: 60%;
-  margin: auto;
+  max-width: 800px;
 }
 .home {
-  max-width: 600px;
   height: max-content;
   margin: 30px;
 }
+
 .heart:hover {
   cursor: pointer;
 }

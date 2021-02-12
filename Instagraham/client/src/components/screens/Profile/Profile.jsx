@@ -1,9 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import "./Profile.css"
 import { StateContext, DispatchContext } from "../../reducers/reducerContext"
+import {useHistory} from 'react-router-dom'
+import M from 'materialize-css'
 
 
 function Profile() {
+  const history = useHistory()
   const dispatch = useContext(DispatchContext)
   const state = useContext(StateContext);
   const userData = state.userData
@@ -43,7 +46,7 @@ function Profile() {
       console.log(data.url);
       changePic(data.url)
     })
-    .catch(err =>{
+    .catch(err => {
         console.log(err);
     })               
 }
@@ -76,17 +79,41 @@ const changePic = (image) => {
     }
   }
 
+  function deleteAccount() {
+    console.log('sending request');
+    fetch(`/delete-account/${userData._id}`, {
+      method: "put",
+      headers: {        
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${sessionStorage.jwt}`
+      }
+    })
+    .then(res => res.json())
+    .then(() => {
+      M.toast({html: "Account deleted successfully! Sorry to see you go!", classes:"#66bb6a green lighten-1 ", displayLength: 1000})
+    })
+
+    dispatch({type: 'logged-out'})
+    history.push('/signup')
+    sessionStorage.clear() 
+    
+  }
+
+
   return (
    <div>
      {!userData ? <h1>Loading</h1> :
       <div className="info-container">
         <div className="pic-container">
           <img className="profile-pic" src={userData.profilepic} alt=""/>
-          <div className="overlay" onClick={toggleDisplay}>Change pic?</div>
+          <div className="overlay" onClick={toggleDisplay}><p>Change pic?</p></div>
         </div>
         
         <div className="user-data">
+          <div className="user-name">
           <h5>{userData.name}</h5>
+        <button className="btn waves-effect waves-light red darken-2" onClick={deleteAccount}>Delete Account</button>
+        </div>
           <ul className="follow-info">
             <h6><strong>{posts.length}</strong> posts</h6>
             <h6><strong>{userData.followers.length}</strong> followers</h6>

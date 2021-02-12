@@ -1,5 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap");
 
+nav {
+  max-width: 800px;
+  color: black;
+  margin: auto;
+}
+
 .brand-logo,
 h2 {
   font-family: "Grand Hotel", cursive;
@@ -11,10 +17,7 @@ a {
 
 /* Login */
 .auth-card {
-  padding: 20px;
   text-align: center;
-  max-width: 400px;
-  margin: 10px auto;
 }
 
 /* label underline focus color */

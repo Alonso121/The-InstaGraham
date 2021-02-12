@@ -119,4 +119,58 @@ router.put("/changepic", (req, res) => {
     });
 });
 
+router.put("/delete-account/:userid", requireLogin, (req, res) => {
+  console.log(req.params.userid);
+  Post.deleteMany({
+    postedBy: req.params.userid,
+  }).catch((err) => {
+    return res.status(422).json({ error: err });
+  });
+  Post.updateMany(
+    {},
+    {
+      $pull: {
+        comments: { postedBy: req.params.userid },
+        likes: req.params.userid,
+      },
+    },
+    {
+      new: true,
+    }
+  )
+    .populate("comments.postedBy", "postId name")
+    .populate("postedBy", { name: 1, profilepic: 1 })
+    .exec((err, result) => {
+      if (err) {
+        return res.status(422).json({ error: err });
+      }
+      User.updateMany(
+        {},
+        {
+          $pull: {
+            followers: req.params.userid,
+            following: req.params.userid,
+          },
+        },
+        {
+          new: true,
+        }
+      )
+        .populate("comments.postedBy", "postId name")
+        .populate("postedBy", { name: 1, profilepic: 1 })
+        .exec((err, result) => {
+          if (err) {
+            return res.status(422).json({ error: err });
+          } else {
+            res.json(result);
+          }
+        });
+    });
+  User.deleteOne({
+    _id: req.params.userid,
+  }).catch((err) => {
+    return res.status(422).json({ error: err });
+  });
+});
+
 module.exports = router;
