@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom"
 import { DispatchContext } from "../../reducers/reducerContext"
+import styles from './UserProfile.module.css'
 
 function Profile() {
   const dispatch = useContext(DispatchContext)
@@ -27,6 +28,7 @@ function Profile() {
     })
   }, [userid, loggedUserId])
   
+  console.log(profile);
 
   function followUser () {
     fetch("/follow", {
@@ -75,9 +77,9 @@ function Profile() {
     <>
     {profile.user ? 
    <div>
-      <div className="info-container">
-        <div className="pic-container">
-          <img className="profile-pic" src={profile.user.profilepic} alt=""/>
+      <div className={styles.infoContainer}>
+        <div className={styles.picContainer}>
+          <img className={styles.profilePic} src={profile.user.profilepic} alt=""/>
         </div>
         <div className="user-data">
           <h5>{profile.user.name}
@@ -88,18 +90,19 @@ function Profile() {
           <button className="btn-small waves-effect waves-light blue darken-2" style={{marginLeft: "16px"}} onClick={() => unfollowUser()}>Unfollow</button>
           }
           </h5>
-          <ul className="follow-info">
+          <ul className={styles.followInfo}>
             <h6><strong>{profile.posts.length}</strong> posts</h6>
             <h6><strong>{profile.user.followers.length}</strong> followers</h6>
             <h6><strong>{profile.user.following.length}</strong> following</h6>
           </ul>
         </div>
       </div>
-      <div className="gallery">
+      <div className={styles.gallery}>
       {profile.posts.map(post => (
-        <img className="item" key={post._id} src={post.photo} alt=""/>
+        <img className={styles.post} key={post._id} src={post.photo} alt=""/>
       ))}
       </div>
+      
   </div>
 
   : <h2>Loading...</h2>}

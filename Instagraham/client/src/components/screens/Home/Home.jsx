@@ -198,7 +198,7 @@ function Home() {
           comment(e.target[0].value, post._id);
           e.target[0].value = ""
         }}>
-        <input type="text" placeholder="add a comment" />
+        <input type="text" placeholder="Add a comment" />
         </form>
         </div>
       </div>

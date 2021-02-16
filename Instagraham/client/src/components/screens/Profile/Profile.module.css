@@ -1,13 +1,14 @@
-.main-container {
+.mainContainer {
   margin: auto;
+  max-width: 90%;
 }
-.info-container {
+.infoContainer {
   display: flex;
   align-items: center;
   border-bottom: 1px solid gray;
 }
 
-.pic-container {
+.picContainer {
   margin-right: 30px;
   position: relative;
 }
@@ -25,7 +26,7 @@
   padding: 60px 32px;
 }
 
-.profile-pic,
+.profilePic,
 .overlay {
   display: block;
   height: 160px;
@@ -37,8 +38,8 @@
   box-shadow: 1px 4px 7px 1px rgba(0, 0, 0, 0.3);
 }
 
-@media only screen and (max-width: 570px) {
-  .profile-pic,
+@media only screen and (max-width: 640px) {
+  .profilePic,
   .overlay {
     height: 80px;
     width: 80px;
@@ -46,35 +47,36 @@
     padding: 0;
     font-size: 20px;
   }
-  .pic-container {
+  .picContainer {
     margin-right: 0;
   }
-  .follow-info h6 {
+  .followInfo h6 {
     font-size: 1rem;
+    display: block;
   }
 }
 
-.pic-container:hover .overlay {
+.picContainer:hover .overlay {
   opacity: 1;
 }
 
-.follow-info h6 {
+.followInfo h6 {
   display: inline;
   margin: 0.5rem;
 }
 
-.user-data {
+.userData {
   flex-grow: 2;
   margin: 0 1rem;
 }
 
-.user-name {
+.userName {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.user-name h5 {
+.userName h5 {
   margin-right: 1rem;
 }
 /* Gallery */
@@ -85,14 +87,9 @@
   max-width: 800px;
 }
 
-.item {
+.post {
   width: 30%;
   object-fit: cover;
   margin: 1.6%;
   box-shadow: 1px 4px 7px 1px rgba(0, 0, 0, 0.3);
-  transition: 0.2s;
-}
-
-.item:hover {
-  transform: scale(1.8);
 }

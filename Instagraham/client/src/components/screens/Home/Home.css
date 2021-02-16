@@ -6,6 +6,12 @@
   margin: 30px;
 }
 
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: grey;
+  opacity: 1; /* Firefox */
+}
+
 .heart:hover {
   cursor: pointer;
 }

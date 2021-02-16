@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import "./Profile.css"
+import styles from'./Profile.module.css'
 import { StateContext, DispatchContext } from "../../reducers/reducerContext"
 import {useHistory} from 'react-router-dom'
 import M from 'materialize-css'
@@ -101,20 +101,20 @@ const changePic = (image) => {
 
 
   return (
-   <div>
+   <div className={styles.mainContainer}>
      {!userData ? <h1>Loading</h1> :
-      <div className="info-container">
-        <div className="pic-container">
-          <img className="profile-pic" src={userData.profilepic} alt=""/>
-          <div className="overlay" onClick={toggleDisplay}><p>Change pic?</p></div>
+      <div className={styles.infoContainer}>
+        <div className={styles.picContainer}>
+          <img className={styles.profilePic} src={userData.profilepic} alt=""/>
+          <div className={styles.overlay} onClick={toggleDisplay}><p>Change pic?</p></div>
         </div>
         
-        <div className="user-data">
-          <div className="user-name">
+        <div className={styles.userData}>
+          <div className={styles.userName}>
           <h5>{userData.name}</h5>
         <button className="btn waves-effect waves-light red darken-2" onClick={deleteAccount}>Delete Account</button>
         </div>
-          <ul className="follow-info">
+          <ul className={styles.followInfo}>
             <h6><strong>{posts.length}</strong> posts</h6>
             <h6><strong>{userData.followers.length}</strong> followers</h6>
             <h6><strong>{userData.following.length}</strong> following</h6>
@@ -134,9 +134,9 @@ const changePic = (image) => {
                 </div>
                 <button className="btn waves-effect waves-light blue dark-2" onClick={postDetails}>Upload</button>
                 </div>
-      <div className="gallery">
+      <div className={styles.gallery}>
       {posts.map(post => (
-        <img className="item" key={post._id} src={post.photo} alt=""/>
+        <img className={styles.post} key={post._id} src={post.photo} alt=""/>
       ))}
       
       </div>

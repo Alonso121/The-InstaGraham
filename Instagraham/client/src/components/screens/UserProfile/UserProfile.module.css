@@ -1,0 +1,95 @@
+.mainContainer {
+  margin: auto;
+  max-width: 90%;
+}
+.infoContainer {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid gray;
+}
+
+.picContainer {
+  margin-right: 30px;
+  position: relative;
+}
+.overlay {
+  text-align: center;
+  font-family: "Grand Hotel", cursive;
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.5); /* Black see-through */
+  opacity: 0;
+  color: white;
+  font-size: 25px;
+  padding: 60px 32px;
+}
+
+.profilePic,
+.overlay {
+  display: block;
+  height: 160px;
+  width: 160px;
+  border-radius: 50%;
+  padding: 4px;
+  object-fit: cover;
+  margin: 0.5rem 3rem;
+  box-shadow: 1px 4px 7px 1px rgba(0, 0, 0, 0.3);
+}
+
+@media only screen and (max-width: 640px) {
+  .profilePic,
+  .overlay {
+    height: 80px;
+    width: 80px;
+    margin-left: 2rem;
+    padding: 0;
+    font-size: 20px;
+  }
+  .picContainer {
+    margin-right: 0;
+  }
+  .followInfo h6 {
+    font-size: 1rem;
+    display: block;
+  }
+}
+
+.picContainer:hover .overlay {
+  opacity: 1;
+}
+
+.followInfo h6 {
+  display: inline;
+  margin: 0.5rem;
+}
+
+.userData {
+  flex-grow: 2;
+  margin: 0 1rem;
+}
+
+.userName {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.userName h5 {
+  margin-right: 1rem;
+}
+/* Gallery */
+.gallery {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  max-width: 800px;
+}
+
+.post {
+  width: 30%;
+  object-fit: cover;
+  margin: 1.6%;
+  box-shadow: 1px 4px 7px 1px rgba(0, 0, 0, 0.3);
+}

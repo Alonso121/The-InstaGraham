@@ -5,7 +5,7 @@ const requireLogin = require("../middleware/RequireLogin");
 const Post = mongoose.model("Post");
 
 router.get("/foreigns", requireLogin, (req, res) => {
-  Post.find({ postedBy: { $nin: req.user.following, $ne: req.user._id } })
+  Post.find({ postedBy: { $nin: req.user.following } })
     .populate("comments.postedBy", "postId name")
     .populate("postedBy", { name: 1, profilepic: 1 })
     .sort("-createdAt")
@@ -20,7 +20,7 @@ router.get("/foreigns", requireLogin, (req, res) => {
 router.get("/home-posts", requireLogin, (req, res) => {
   console.log(req.user._id);
   Post.find({
-    postedBy: { $in: [req.user.following, req.user._id] },
+    postedBy: { $in: req.user.following },
   })
     .populate("comments.postedBy", "postId name")
     .populate("postedBy", { name: 1, profilepic: 1 })
