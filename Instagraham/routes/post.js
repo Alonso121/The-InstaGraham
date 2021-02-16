@@ -18,8 +18,9 @@ router.get("/foreigns", requireLogin, (req, res) => {
 });
 
 router.get("/home-posts", requireLogin, (req, res) => {
+  console.log(req.user._id);
   Post.find({
-    postedBy: { $in: req.user.following },
+    postedBy: { $in: [req.user.following, req.user._id] },
   })
     .populate("comments.postedBy", "postId name")
     .populate("postedBy", { name: 1, profilepic: 1 })

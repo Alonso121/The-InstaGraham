@@ -157,7 +157,7 @@ function Home() {
               <h6>{post.postedBy.name}</h6>
               </div>
               {post.postedBy._id === userId &&               
-              <i className  ="material-icons right" style={{float: "right"}} onClick={() => deletePost(post._id)}>delete</i> 
+              <i className  ="material-icons right" style={{float: "right", cursor:"pointer"}} onClick={() => deletePost(post._id)}>delete</i> 
               }
             </div>
         <div className="card-image">
@@ -186,7 +186,7 @@ function Home() {
           {
              comment.postedBy._id === userId ||  post.postedBy._id === userId 
             ? 
-            <i className  ="material-icons tiny" style={{float: "right"}} onClick={() => deleteComment(comment, post._id, post.postedBy._id)}>delete</i>
+            <i className  ="material-icons tiny" style={{float: "right", cursor:"pointer"}} onClick={() => deleteComment(comment, post._id, post.postedBy._id)}>delete</i>
             :
             null
           }
